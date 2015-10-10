@@ -10,7 +10,7 @@ To generate each asteroid's geometry, I start at the origin, rotate by 45 degree
 Rendering each asteroid is as simple as translating each of those points along the asteroid's position vector, and connecting the dots.
 
 ##Collision Detection
-Currently, objects are represented by bounding circles for the purposes of approximate collision detection. I plan to implement an optimized per-pixel collision detection algorithm in the future.
+Because asteroids can be either convex or concave polygons, bounding circle collision detecion does not suffice.  Instead, I've written a lightweight implementation of the Separating Axis Theorem, which I use to check the asteroids for collisions.  Since SAT only works on convex polygons, I decompose each asteroid into a series of triangles, and check each of those for collisions with the ship and with bullets.  At present, this collision detection is O(n^2) in the number of collidable objects. This does not create any visible lag, but I'd still like to implement a hash grid to reduce collision detecion's complexity to O(number of collisions) in the near future.   
 
 ##Tools
 I use [keymaster](https://github.com/madrobby/keymaster) to simplify listening for keyboard events, and supplement it with jQuery to achieve more customized behavior where necessary.
